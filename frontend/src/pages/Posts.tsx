@@ -6,7 +6,7 @@ import {useFetching} from "../hooks/useFetching";
 import {getPageCount} from "../utils/pages";
 import MyModal from "../components/UI/modal/MyModal";
 import PostForm from "../components/PostForm";
-import PostFilter from "../components/PostFilter";
+import PostFilter, {IFilter} from "../components/PostFilter";
 import Loader from "../components/UI/Loader/Loader";
 import MyButton from "../components/UI/button/MyButton";
 import PostList from "../components/PostList";
@@ -17,14 +17,14 @@ import {IPost} from "../models/models";
 function Posts() {
   const [posts, setPosts] = useState<IPost[]>([])
   const [modal, setModal] = useState<boolean>(false)
-  const [filter, setFilter] = useState({sort: "", query: ""})
+  const [filter, setFilter] = useState<IFilter>({sort: "", query: ""})
   const [totalPages, setTotalPages] = useState<number>(0)
   const [limit, setLimit] = useState<number>(10)
   const [page, setPage] = useState<number>(1)
 
   const sortedAndSearchPosts = usePosts(posts, filter.sort, filter.query)
 
-  const [fetchPosts, isPostLoading, postError] = useFetching(async (limit, page) => {
+  const [fetchPosts, isPostLoading, postError] = useFetching(async (limit: number, page: number):Promise<void> => {
     const response = await PostService.getAll(limit, page);
     setPosts(response.data)
     const totalCount = response.headers['x-total-count']
@@ -32,16 +32,16 @@ function Posts() {
     setTotalPages(getPageCount(totalCount, limit))
   })
 
-  useEffect(():void => {
+  useEffect(() => {
     fetchPosts(limit, page)
   }, [])
 
-  const createPost = (newPost: IPost) => {
+  const createPost = (newPost: IPost): any => {
     setPosts([...posts, newPost])
     setModal(false)
   }
 
-  const removePost = (post: IPost) => {
+  const removePost = (post: IPost):void => {
     setPosts(posts.filter(p => p.id !== post.id))
   }
 

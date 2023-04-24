@@ -5,9 +5,11 @@ import {IPost} from "../models/models";
 
 interface PostItemProps {
     post: IPost
+    number: number
+    remove(post: IPost): any;
 }
 
-const PostItem: FC<PostItemProps> = (props) => {
+const PostItem: FC<PostItemProps> = (props: PostItemProps) => {
   const navigate = useNavigate()
   return (
     <div className="post">

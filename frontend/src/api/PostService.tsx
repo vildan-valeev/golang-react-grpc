@@ -1,5 +1,5 @@
 import axios, {AxiosResponse} from "axios";
-import {IPost} from "../models/models";
+import {IComment, IPost} from "../models/models";
 
 export default class PostService {
   static async getAll(limit: number = 10, page: number = 1): Promise<AxiosResponse<IPost[]>>{
@@ -15,7 +15,7 @@ export default class PostService {
     return await axios.get<IPost>("https://jsonplaceholder.typicode.com/posts/"  + id )
   }
 
-  static async getCommentsByPostId(id: number):Promise<AxiosResponse<IPost>>{
+  static async getCommentsByPostId(id: number):Promise<AxiosResponse<IComment>>{
     return await axios.get(`https://jsonplaceholder.typicode.com/posts/${id}/comments`)
   }
 }

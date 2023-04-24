@@ -6,7 +6,7 @@ import {IPost} from "../models/models";
 interface PostListProps {
     posts: IPost[]
     title: string
-    remove:IPost
+    remove: any
 }
 
 const PostList: FC<PostListProps> = ({posts, title, remove}) => {

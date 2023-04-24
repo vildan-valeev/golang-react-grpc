@@ -1,7 +1,13 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {getPagesArray} from "../../../utils/pages";
 
-const Pagination = ({totalPages, page, changePage}) => {
+interface PaginationProps {
+  totalPages: any
+  page: number
+  changePage: any
+}
+
+const Pagination: FC<PaginationProps> = ({totalPages, page, changePage}) => {
   let pageArray = getPagesArray(totalPages);
 
   return (

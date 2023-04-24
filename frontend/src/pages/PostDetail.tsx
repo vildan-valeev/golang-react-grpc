@@ -3,23 +3,24 @@ import {useParams} from "react-router-dom";
 import {useFetching} from "../hooks/useFetching";
 import PostService from "../api/PostService";
 import Loader from "../components/UI/Loader/Loader";
-import {findAllByDisplayValue} from "@testing-library/react";
+import {IComment, IPost} from "../models/models";
 
 interface PostItemPageParams {
   id: string
 }
 
 const PostDetail: FC = () => {
-  const params = useParams<PostItemPageParams>()
-  const [post, setPost] = useState({})
-  const [comments, setComments] = useState([])
+  const params = useParams()
+  const [post, setPost] = useState<IPost>({body: "", id: 0, title: ""})
+  const [comments, setComments] = useState<IComment[]>([])
 
-  const [fetchPostById, isLoading, error] = useFetching(async (id) => {
+  const [fetchPostById, isLoading, error] = useFetching(async (id: number) => {
     const response = await PostService.getById(id)
     setPost(response.data)
   })
-  const [fetchComments, isComLoading, errorComment] = useFetching(async (id) => {
+  const [fetchComments, isComLoading, errorComment] = useFetching(async (id: number) => {
     const response = await PostService.getCommentsByPostId(id)
+    // @ts-ignore
     setComments(response.data)
   })
 

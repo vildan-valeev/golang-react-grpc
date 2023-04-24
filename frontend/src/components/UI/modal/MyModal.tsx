@@ -1,7 +1,14 @@
-import React from 'react';
+import React, {FC} from 'react';
+// @ts-ignore
 import classes from "./MyModal.module.css";
 
-const MyModal = ({children, visible, setVisible}) => {
+interface MyModalProps {
+    children: any
+    visible: any
+    setVisible: any
+}
+
+const MyModal: FC<MyModalProps> = ({children, visible, setVisible}) => {
 
   const rootClasses = [classes.myModal]
   if (visible) {
