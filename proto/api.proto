@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package generated;
+option go_package = "backend/proto/generated;generated";
+
+
+service APIService {
+  // Создание
+  rpc CreateItem(Item) returns (Empty) {}
+  // Получение записи
+  rpc GetItemDetail(ItemID) returns (Item) {}
+  // Список
+  rpc GetItemList(Empty) returns (ItemList) {}
+  // Удаление
+  rpc DeleteItem(ItemID) returns (Empty) {}
+}
+
+message Empty {}
+
+message Item {
+  int64 id = 1;
+  string title = 2;
+  string description = 3;
+}
+
+message ItemID {
+  int64 id = 1;
+}
+
+message ItemList {
+  repeated Item items = 1;
+}
