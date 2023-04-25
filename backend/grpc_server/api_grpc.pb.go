@@ -23,13 +23,13 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type APIServiceClient interface {
 	// Создание
-	CreateItem(ctx context.Context, in *Item, opts ...grpc.CallOption) (*Empty, error)
+	CreatePost(ctx context.Context, in *Post, opts ...grpc.CallOption) (*Empty, error)
 	// Получение записи
-	GetItemDetail(ctx context.Context, in *ItemID, opts ...grpc.CallOption) (*Item, error)
+	GetPostDetail(ctx context.Context, in *PostID, opts ...grpc.CallOption) (*Post, error)
 	// Список
-	GetItemList(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*ItemList, error)
+	GetPostList(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*PostList, error)
 	// Удаление
-	DeleteItem(ctx context.Context, in *ItemID, opts ...grpc.CallOption) (*Empty, error)
+	DeletePost(ctx context.Context, in *PostID, opts ...grpc.CallOption) (*Empty, error)
 }
 
 type aPIServiceClient struct {
@@ -40,36 +40,36 @@ func NewAPIServiceClient(cc grpc.ClientConnInterface) APIServiceClient {
 	return &aPIServiceClient{cc}
 }
 
-func (c *aPIServiceClient) CreateItem(ctx context.Context, in *Item, opts ...grpc.CallOption) (*Empty, error) {
+func (c *aPIServiceClient) CreatePost(ctx context.Context, in *Post, opts ...grpc.CallOption) (*Empty, error) {
 	out := new(Empty)
-	err := c.cc.Invoke(ctx, "/generated.APIService/CreateItem", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/generated.APIService/CreatePost", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *aPIServiceClient) GetItemDetail(ctx context.Context, in *ItemID, opts ...grpc.CallOption) (*Item, error) {
-	out := new(Item)
-	err := c.cc.Invoke(ctx, "/generated.APIService/GetItemDetail", in, out, opts...)
+func (c *aPIServiceClient) GetPostDetail(ctx context.Context, in *PostID, opts ...grpc.CallOption) (*Post, error) {
+	out := new(Post)
+	err := c.cc.Invoke(ctx, "/generated.APIService/GetPostDetail", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *aPIServiceClient) GetItemList(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*ItemList, error) {
-	out := new(ItemList)
-	err := c.cc.Invoke(ctx, "/generated.APIService/GetItemList", in, out, opts...)
+func (c *aPIServiceClient) GetPostList(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*PostList, error) {
+	out := new(PostList)
+	err := c.cc.Invoke(ctx, "/generated.APIService/GetPostList", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *aPIServiceClient) DeleteItem(ctx context.Context, in *ItemID, opts ...grpc.CallOption) (*Empty, error) {
+func (c *aPIServiceClient) DeletePost(ctx context.Context, in *PostID, opts ...grpc.CallOption) (*Empty, error) {
 	out := new(Empty)
-	err := c.cc.Invoke(ctx, "/generated.APIService/DeleteItem", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/generated.APIService/DeletePost", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -81,13 +81,13 @@ func (c *aPIServiceClient) DeleteItem(ctx context.Context, in *ItemID, opts ...g
 // for forward compatibility
 type APIServiceServer interface {
 	// Создание
-	CreateItem(context.Context, *Item) (*Empty, error)
+	CreatePost(context.Context, *Post) (*Empty, error)
 	// Получение записи
-	GetItemDetail(context.Context, *ItemID) (*Item, error)
+	GetPostDetail(context.Context, *PostID) (*Post, error)
 	// Список
-	GetItemList(context.Context, *Empty) (*ItemList, error)
+	GetPostList(context.Context, *Empty) (*PostList, error)
 	// Удаление
-	DeleteItem(context.Context, *ItemID) (*Empty, error)
+	DeletePost(context.Context, *PostID) (*Empty, error)
 	mustEmbedUnimplementedAPIServiceServer()
 }
 
@@ -95,17 +95,17 @@ type APIServiceServer interface {
 type UnimplementedAPIServiceServer struct {
 }
 
-func (UnimplementedAPIServiceServer) CreateItem(context.Context, *Item) (*Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateItem not implemented")
+func (UnimplementedAPIServiceServer) CreatePost(context.Context, *Post) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreatePost not implemented")
 }
-func (UnimplementedAPIServiceServer) GetItemDetail(context.Context, *ItemID) (*Item, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetItemDetail not implemented")
+func (UnimplementedAPIServiceServer) GetPostDetail(context.Context, *PostID) (*Post, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPostDetail not implemented")
 }
-func (UnimplementedAPIServiceServer) GetItemList(context.Context, *Empty) (*ItemList, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetItemList not implemented")
+func (UnimplementedAPIServiceServer) GetPostList(context.Context, *Empty) (*PostList, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPostList not implemented")
 }
-func (UnimplementedAPIServiceServer) DeleteItem(context.Context, *ItemID) (*Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteItem not implemented")
+func (UnimplementedAPIServiceServer) DeletePost(context.Context, *PostID) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeletePost not implemented")
 }
 func (UnimplementedAPIServiceServer) mustEmbedUnimplementedAPIServiceServer() {}
 
@@ -120,74 +120,74 @@ func RegisterAPIServiceServer(s grpc.ServiceRegistrar, srv APIServiceServer) {
 	s.RegisterService(&APIService_ServiceDesc, srv)
 }
 
-func _APIService_CreateItem_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Item)
+func _APIService_CreatePost_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Post)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(APIServiceServer).CreateItem(ctx, in)
+		return srv.(APIServiceServer).CreatePost(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/generated.APIService/CreateItem",
+		FullMethod: "/generated.APIService/CreatePost",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(APIServiceServer).CreateItem(ctx, req.(*Item))
+		return srv.(APIServiceServer).CreatePost(ctx, req.(*Post))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _APIService_GetItemDetail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ItemID)
+func _APIService_GetPostDetail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PostID)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(APIServiceServer).GetItemDetail(ctx, in)
+		return srv.(APIServiceServer).GetPostDetail(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/generated.APIService/GetItemDetail",
+		FullMethod: "/generated.APIService/GetPostDetail",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(APIServiceServer).GetItemDetail(ctx, req.(*ItemID))
+		return srv.(APIServiceServer).GetPostDetail(ctx, req.(*PostID))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _APIService_GetItemList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _APIService_GetPostList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(APIServiceServer).GetItemList(ctx, in)
+		return srv.(APIServiceServer).GetPostList(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/generated.APIService/GetItemList",
+		FullMethod: "/generated.APIService/GetPostList",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(APIServiceServer).GetItemList(ctx, req.(*Empty))
+		return srv.(APIServiceServer).GetPostList(ctx, req.(*Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _APIService_DeleteItem_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ItemID)
+func _APIService_DeletePost_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PostID)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(APIServiceServer).DeleteItem(ctx, in)
+		return srv.(APIServiceServer).DeletePost(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/generated.APIService/DeleteItem",
+		FullMethod: "/generated.APIService/DeletePost",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(APIServiceServer).DeleteItem(ctx, req.(*ItemID))
+		return srv.(APIServiceServer).DeletePost(ctx, req.(*PostID))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -200,20 +200,20 @@ var APIService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*APIServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "CreateItem",
-			Handler:    _APIService_CreateItem_Handler,
+			MethodName: "CreatePost",
+			Handler:    _APIService_CreatePost_Handler,
 		},
 		{
-			MethodName: "GetItemDetail",
-			Handler:    _APIService_GetItemDetail_Handler,
+			MethodName: "GetPostDetail",
+			Handler:    _APIService_GetPostDetail_Handler,
 		},
 		{
-			MethodName: "GetItemList",
-			Handler:    _APIService_GetItemList_Handler,
+			MethodName: "GetPostList",
+			Handler:    _APIService_GetPostList_Handler,
 		},
 		{
-			MethodName: "DeleteItem",
-			Handler:    _APIService_DeleteItem_Handler,
+			MethodName: "DeletePost",
+			Handler:    _APIService_DeletePost_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -1,20 +1,21 @@
 version: '3.9'
 services:
   envoy:
+    container_name: envoy
     build:
       context: envoy
     ports:
-      - 8000:8000
-      - 9901:9901
-    depends_on:
-      backend:
-        condition: service_healthy # waiting until heathcheck of postgres is good
+      - 8090:8090
 
-  backend:
-    container_name: backend
-    build: ./backend
-    ports:
-      - "8000:8000"
+#    depends_on:
+#      backend:
+#        condition: service_healthy # waiting until heathcheck of postgres is good
+
+#  backend:
+#    container_name: backend
+#    build: ./backend
+#    ports:
+#      - "8000:8000"
 
 #  frontend:
 #    build: ./frontend

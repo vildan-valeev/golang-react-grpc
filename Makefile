@@ -7,11 +7,11 @@ $(APP_BIN):
 
 .PHONY: up
 up:
-	docker-compose up --build
+	docker compose up --build
 
 .PHONY: stop
 stop:
-	docker-compose stop
+	docker compose stop
 
 .PHONY: go-proto
 go-proto:
@@ -20,8 +20,10 @@ go-proto:
 
 .PHONY: js-proto
 js-proto:
-	@protoc -I=proto proto/*.proto --js_out=import_style=commonjs:./frontend/grpc_client --grpc-web_out=import_style=commonjs,mode=grpcwebtext:./frontend/grpc_client
+	@protoc -I=proto proto/*.proto --js_out=import_style=commonjs:./frontend/src/api/grpc_client --grpc-web_out=import_style=commonjs,mode=grpcwebtext:./frontend/src/api/grpc_client
 
 .PHONY: ts-proto
 ts-proto:
-	@protoc -I=proto proto/*.proto --js_out=import_style=commonjs,binary:./frontend/grpc_client --grpc-web_out=import_style=typescript,mode=grpcwebtext:./frontend/grpc_client
+	@protoc -I=proto proto/*.proto \
+	--js_out=import_style=commonjs,binary:./frontend/src/api/grpc_client \
+	--grpc-web_out=import_style=typescript,mode=grpcwebtext:./frontend/src/api/grpc_client

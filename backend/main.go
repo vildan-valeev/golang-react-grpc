@@ -14,41 +14,49 @@ type server struct {
 	pb.UnimplementedAPIServiceServer
 }
 
-func (s *server) ItemList(ctx context.Context, in *pb.Empty) (*pb.ItemList, error) {
+func (s *server) GetPostList(ctx context.Context, in *pb.Empty) (*pb.PostList, error) {
 	log.Printf("Get ItemList...")
-	return &pb.ItemList{
-		Items: []*pb.Item{
+	return &pb.PostList{
+		Items: []*pb.Post{
 			{
-				Title:       "aa",
-				Description: "cc",
+				Id:    1,
+				Title: "aa",
+				Body:  "cc",
 			},
 			{
-				Title:       "aa",
-				Description: "cc",
+				Id:    2,
+				Title: "aa",
+				Body:  "cc",
 			},
 			{
-				Title:       "aa",
-				Description: "cc",
+				Id:    3,
+				Title: "aa",
+				Body:  "cc",
 			},
 			{
-				Title:       "aa",
-				Description: "cc",
+				Id:    4,
+				Title: "aa",
+				Body:  "cc",
 			},
 			{
-				Title:       "aa",
-				Description: "cc",
+				Id:    5,
+				Title: "aa",
+				Body:  "cc",
 			},
 			{
-				Title:       "aa",
-				Description: "cc",
+				Id:    6,
+				Title: "aa",
+				Body:  "cc",
 			},
 			{
-				Title:       "aa",
-				Description: "cc",
+				Id:    7,
+				Title: "aa",
+				Body:  "cc",
 			},
 			{
-				Title:       "aa",
-				Description: "cc",
+				Id:    8,
+				Title: "aa",
+				Body:  "cc",
 			},
 		},
 	}, nil
@@ -56,10 +64,11 @@ func (s *server) ItemList(ctx context.Context, in *pb.Empty) (*pb.ItemList, erro
 
 func main() {
 	flag.Parse()
-	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", 50051))
+	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", 9000))
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
+
 	s := grpc.NewServer()
 	pb.RegisterAPIServiceServer(s, &server{})
 	log.Printf("server listening at %v", lis.Addr())
