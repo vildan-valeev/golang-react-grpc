@@ -5,7 +5,11 @@ services:
     build:
       context: envoy
     ports:
+      - 9901:9901
       - 8090:8090
+    network_mode: "host"
+
+
 
 #    depends_on:
 #      backend:

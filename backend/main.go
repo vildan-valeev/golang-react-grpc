@@ -58,6 +58,21 @@ func (s *server) GetPostList(ctx context.Context, in *pb.Empty) (*pb.PostList, e
 				Title: "aa",
 				Body:  "cc",
 			},
+			{
+				Id:    9,
+				Title: "aa",
+				Body:  "cc",
+			},
+			{
+				Id:    10,
+				Title: "aa",
+				Body:  "cc",
+			},
+			{
+				Id:    11,
+				Title: "aa",
+				Body:  "cc",
+			},
 		},
 	}, nil
 }

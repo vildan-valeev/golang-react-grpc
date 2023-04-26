@@ -18,13 +18,13 @@ service APIService {
 message Empty {}
 
 message Post {
-  int64 id = 1;
+  int32 id = 1;
   string title = 2;
   string body = 3;
 }
 
 message PostID {
-  int64 id = 1;
+  int32 id = 1;
 }
 
 message PostList {

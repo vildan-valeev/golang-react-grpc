@@ -3,3 +3,4 @@
 *Pb.ts
 *.json
 /dist/*
+src/api/grpc_client/*
