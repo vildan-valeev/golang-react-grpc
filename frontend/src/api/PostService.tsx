@@ -16,43 +16,14 @@ const transport: GrpcWebFetchTransport = new GrpcWebFetchTransport({
 
 const client = new APIServiceClient(transport);
 
-async function main() {
-
-    await callUnary(client);
-
-    // await callServerStream(client);
-
-}
-
-
-async function callUnary(client: IAPIServiceClient) {
-
-    const call = client.getPostList({});
-
-    console.log(`### calling method "${call.method.name}"...`)
-
-    const headers = await call.headers;
-    console.log("got response headers: ", headers)
-
-    const response = await call.response;
-    console.log("got response message: ", response)
-
-    const status = await call.status;
-    console.log("got status: ", status)
-
-    const trailers = await call.trailers;
-    console.log("got trailers: ", trailers)
-
-    console.log();
-}
-
-
 
 export default class PostService {
   static async getAll(limit: number = 10, page: number = 1): Promise<PostList>{
       const call = client.getPostList({});
 
       return await call.response;
+
+
 
     // const client = new APIServiceClient('http://localhost:8090', null, null);
     //
@@ -97,4 +68,33 @@ export default class PostService {
   static async getCommentsByPostId(id: number):Promise<AxiosResponse<IComment>>{
     return await axios.get(`https://jsonplaceholder.typicode.com/posts/${id}/comments`)
   }
+}
+
+async function callUnary(client: IAPIServiceClient) {
+
+    const call = client.getPostList({});
+
+    console.log(`### calling method "${call.method.name}"...`)
+
+    const headers = await call.headers;
+    console.log("got response headers: ", headers)
+
+    const response = await call.response;
+    console.log("got response message: ", response)
+
+    const status = await call.status;
+    console.log("got status: ", status)
+
+    const trailers = await call.trailers;
+    console.log("got trailers: ", trailers)
+
+    console.log();
+}
+
+async function main() {
+
+    await callUnary(client);
+
+    // await callServerStream(client);
+
 }
